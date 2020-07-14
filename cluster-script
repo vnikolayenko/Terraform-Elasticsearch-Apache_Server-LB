@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+export AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id)
+export AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key)
+export NAME=myfirstcluster.k8s.local
+export KOPS_STATE_STORE=s3://example-com-state-store
+kops create -f cluster-conf.yaml
+kops create secret --name myfirstcluster.k8s.local sshpublickey admin -i ~/.ssh/id_rsa.pub
+kops update cluster myfirstcluster.k8s.local --yes
